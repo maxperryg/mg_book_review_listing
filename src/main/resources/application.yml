@@ -1,0 +1,10 @@
+spring:
+  config:
+    import: file:.env[.properties]
+
+application:
+  credentials:
+      api:
+        goodreads:
+          key: ${GOODREADS_API_KEY}
+          secret: ${GOODREADS_API_SECRET}
