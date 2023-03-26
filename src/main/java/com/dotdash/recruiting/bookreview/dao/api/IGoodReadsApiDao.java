@@ -1,7 +1,7 @@
 package com.dotdash.recruiting.bookreview.dao.api;
 
-import com.dotdash.recruiting.bookreview.entity.model.Book;
+import com.dotdash.recruiting.bookreview.entity.model.GoodreadsResponse;
 
 public interface IGoodReadsApiDao {
-    public Book getBookById(Long bookId);
+    public GoodreadsResponse searchBooks();
 }
