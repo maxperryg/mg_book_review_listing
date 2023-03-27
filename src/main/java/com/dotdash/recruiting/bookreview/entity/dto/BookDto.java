@@ -1,41 +1,88 @@
 package com.dotdash.recruiting.bookreview.entity.dto;
 
 public class BookDto {
-    private String name;
+    private String title;
+    private String author;
+    private String image;
+
+    public BookDto() {
+    }
 
     private BookDto(Builder builder) {
-        setName(builder.name);
+        setTitle(builder.title);
+        setAuthor(builder.author);
+        setImage(builder.image);
     }
 
     public static Builder newBuilder() {
         return new Builder();
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     /**
      * {@code BookDto} builder static inner class.
      */
     public static final class Builder {
-        private String name;
+        private String title;
+        private String author;
+        private String image;
 
         private Builder() {
         }
 
         /**
-         * Sets the {@code name} and returns a reference to this Builder enabling method chaining.
+         * Sets the {@code title} and returns a reference to this Builder enabling method chaining.
          *
-         * @param name the {@code name} to set
+         * @param title the {@code title} to set
          * @return a reference to this Builder
          */
-        public Builder withName(String name) {
-            this.name = name;
+        public Builder withTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        /**
+         * Sets the {@code author} and returns a reference to this Builder enabling method chaining.
+         *
+         * @param author the {@code author} to set
+         * @return a reference to this Builder
+         */
+        public Builder withAuthor(String author) {
+            this.author = author;
+            return this;
+        }
+
+        /**
+         * Sets the {@code image} and returns a reference to this Builder enabling method chaining.
+         *
+         * @param image the {@code image} to set
+         * @return a reference to this Builder
+         */
+        public Builder withImage(String image) {
+            this.image = image;
             return this;
         }
 
