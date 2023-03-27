@@ -43,6 +43,9 @@ public class GoodReadsApiDaoImpl implements IGoodReadsApiDao {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public GoodReadsApiDaoImpl() {
+    }
+
     @Override
     public GoodreadsResponse searchBooks(String query, Long page, String searchBy) {
         var uri = UriComponentsBuilder.newInstance()
@@ -61,8 +64,8 @@ public class GoodReadsApiDaoImpl implements IGoodReadsApiDao {
         headers.setAccept(List.of(MediaType.APPLICATION_XML));
 
         var entity = new HttpEntity<>(headers);
-        var template = new RestTemplate();
-        var goodReadsResponseEntity = template.exchange(uri, HttpMethod.GET, entity, String.class);
+        var restTemplate = new RestTemplate();
+        var goodReadsResponseEntity = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
         var goodReadsResponseString = goodReadsResponseEntity.getBody();
 
         var mapper = new XmlMapper();

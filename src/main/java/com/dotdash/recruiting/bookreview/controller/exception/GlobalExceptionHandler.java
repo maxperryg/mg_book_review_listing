@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 new GeneralErrorResponse(
                         HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                        e.getMessage(),
+                        "",
                         HttpStatus.INTERNAL_SERVER_ERROR.toString()
                 ),
                 HttpStatus.INTERNAL_SERVER_ERROR
