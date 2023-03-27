@@ -1,8 +1,11 @@
 package com.dotdash.recruiting.bookreview.entity.model;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
 public class Id {
+	@JacksonXmlProperty(isAttribute = true)
 	public String type;
-	public Long text;
+	public Long value;
 
 	public Id() {
 	}
@@ -15,11 +18,11 @@ public class Id {
 		this.type = type;
 	}
 
-	public Long getText() {
-		return text;
+	public Long getValue() {
+		return value;
 	}
 
-	public void setText(Long text) {
-		this.text = text;
+	public void setValue(Long value) {
+		this.value = value;
 	}
 }

@@ -1,14 +1,26 @@
 package com.dotdash.recruiting.bookreview.entity.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class Search {
 	public String query;
-	public Long resultsstart;
-	public Long resultsend;
-	public Long totalresults;
+
+	@JsonProperty("results-start")
+	public Long resultsStart;
+
+	@JsonProperty("results-end")
+	public Long resultsEnd;
+
+	@JsonProperty("total-results")
+	public Long totalResults;
+
 	public String source;
-	public BigDecimal querytimeseconds;
+
+	@JsonProperty("query-time-seconds")
+	public BigDecimal queryTimeSeconds;
+
 	public Results results;
 
 	public Search() {
@@ -22,28 +34,28 @@ public class Search {
 		this.query = query;
 	}
 
-	public Long getResultsstart() {
-		return resultsstart;
+	public Long getResultsStart() {
+		return resultsStart;
 	}
 
-	public void setResultsstart(Long resultsstart) {
-		this.resultsstart = resultsstart;
+	public void setResultsStart(Long resultsStart) {
+		this.resultsStart = resultsStart;
 	}
 
-	public Long getResultsend() {
-		return resultsend;
+	public Long getResultsEnd() {
+		return resultsEnd;
 	}
 
-	public void setResultsend(Long resultsend) {
-		this.resultsend = resultsend;
+	public void setResultsEnd(Long resultsEnd) {
+		this.resultsEnd = resultsEnd;
 	}
 
-	public Long getTotalresults() {
-		return totalresults;
+	public Long getTotalResults() {
+		return totalResults;
 	}
 
-	public void setTotalresults(Long totalresults) {
-		this.totalresults = totalresults;
+	public void setTotalResults(Long totalResults) {
+		this.totalResults = totalResults;
 	}
 
 	public String getSource() {
@@ -54,12 +66,12 @@ public class Search {
 		this.source = source;
 	}
 
-	public BigDecimal getQuerytimeseconds() {
-		return querytimeseconds;
+	public BigDecimal getQueryTimeSeconds() {
+		return queryTimeSeconds;
 	}
 
-	public void setQuerytimeseconds(BigDecimal querytimeseconds) {
-		this.querytimeseconds = querytimeseconds;
+	public void setQueryTimeSeconds(BigDecimal queryTimeSeconds) {
+		this.queryTimeSeconds = queryTimeSeconds;
 	}
 
 	public Results getResults() {

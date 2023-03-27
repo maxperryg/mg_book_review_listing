@@ -1,9 +1,11 @@
 package com.dotdash.recruiting.bookreview.entity.model;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
 public class OriginalPublicationDay {
+	@JacksonXmlProperty(isAttribute = true)
 	public String type;
-	public Long text;
-	public Boolean nil;
+	public Long value;
 
 	public OriginalPublicationDay() {
 	}
@@ -16,19 +18,11 @@ public class OriginalPublicationDay {
 		this.type = type;
 	}
 
-	public Long getText() {
-		return text;
+	public Long getValue() {
+		return value;
 	}
 
-	public void setText(Long text) {
-		this.text = text;
-	}
-
-	public Boolean getNil() {
-		return nil;
-	}
-
-	public void setNil(Boolean nil) {
-		this.nil = nil;
+	public void setValue(Long value) {
+		this.value = value;
 	}
 }

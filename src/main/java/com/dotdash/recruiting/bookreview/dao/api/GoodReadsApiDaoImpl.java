@@ -1,6 +1,9 @@
 package com.dotdash.recruiting.bookreview.dao.api;
 
 import com.dotdash.recruiting.bookreview.entity.model.GoodreadsResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,14 +11,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
-import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -34,6 +33,7 @@ public class GoodReadsApiDaoImpl implements IGoodReadsApiDao {
 
     @Value("${application.api.goodreads.credentials.secret}")
     private String secret;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -43,7 +43,7 @@ public class GoodReadsApiDaoImpl implements IGoodReadsApiDao {
                 .host(url)
                 .path(searchEndpoint)
                 .queryParam("key", key)
-                .queryParam("q", "harry")
+                .queryParam("q", "moby")
                 .build()
                 .toUriString();
         logger.info(MESSAGE_CALLING_PREFIX, uri);
@@ -53,24 +53,18 @@ public class GoodReadsApiDaoImpl implements IGoodReadsApiDao {
 
         var entity = new HttpEntity<>(headers);
         var template = new RestTemplate();
+        var goodReadsResponseEntity = template.exchange(uri, HttpMethod.GET, entity, String.class);
+        var goodReadsResponseString = goodReadsResponseEntity.getBody();
 
-        template.setMessageConverters(getXmlMessageConverters());
+        var mapper = new XmlMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        GoodreadsResponse goodReadsObject;
+        try {
+            goodReadsObject = mapper.readValue(goodReadsResponseString, GoodreadsResponse.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
-        var goodReadsResponseEntity = template.exchange(uri, HttpMethod.GET, entity, GoodreadsResponse.class);
-
-        return goodReadsResponseEntity.getBody();
-    }
-
-    private List<HttpMessageConverter<?>> getXmlMessageConverters() {
-        XStreamMarshaller marshaller = new XStreamMarshaller();
-
-        marshaller.setAnnotatedClass(GoodreadsResponse.class);
-//        marshaller.setAnnotatedClasses(GoodreadsResponse.class);
-        MarshallingHttpMessageConverter marshallingConverter =
-                new MarshallingHttpMessageConverter(marshaller);
-
-        List<HttpMessageConverter<?>> converters = new ArrayList<>();
-        converters.add(marshallingConverter);
-        return converters;
+        return goodReadsObject;
     }
 }

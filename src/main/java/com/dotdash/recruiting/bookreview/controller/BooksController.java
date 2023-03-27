@@ -12,9 +12,11 @@ import java.util.List;
 
 @RestController
 public class BooksController {
+    private static final String ENDPOINT_SEARCH = "/book/search";
+
     private BooksHandler booksHandler;
 
-    @GetMapping(value = "/book/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = ENDPOINT_SEARCH, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<BookDto>> SearchBooks() {
         var bookDto = booksHandler.searchBooks();
         return ResponseEntity.ok(bookDto);

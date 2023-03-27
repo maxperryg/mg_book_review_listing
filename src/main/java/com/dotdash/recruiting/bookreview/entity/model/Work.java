@@ -1,17 +1,33 @@
 package com.dotdash.recruiting.bookreview.entity.model;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Work {
 	public Id id;
-	public BooksCount books_count;
-	public RatingsCount ratings_count;
-	public TextReviewsCount text_reviews_count;
-	public OriginalPublicationYear original_publication_year;
-	public OriginalPublicationMonth original_publication_month;
-	public OriginalPublicationDay original_publication_day;
-	public BigDecimal average_rating;
-	public BestBook best_book;
+
+	@JsonProperty("books_count")
+	public BooksCount booksCount;
+
+	@JsonProperty("ratings_count")
+	public RatingsCount ratingsCount;
+
+	@JsonProperty("test_reviews_count")
+	public TextReviewsCount textReviewsCount;
+
+	@JsonProperty("original_publication_year")
+	public OriginalPublicationYear originalPublicationYear;
+
+	@JsonProperty("original_publication_month")
+	public OriginalPublicationMonth originalPublicationMonth;
+
+	@JsonProperty("original_publication_day")
+	public OriginalPublicationDay originalPublicationDay;
+
+	@JsonProperty("average_rating")
+	public String averageRating;
+
+	@JsonProperty("best_book")
+	public BestBook bestBook;
 
 	public Work() {
 	}
@@ -24,67 +40,67 @@ public class Work {
 		this.id = id;
 	}
 
-	public BooksCount getBooks_count() {
-		return books_count;
+	public BooksCount getBooksCount() {
+		return booksCount;
 	}
 
-	public void setBooks_count(BooksCount books_count) {
-		this.books_count = books_count;
+	public void setBooksCount(BooksCount booksCount) {
+		this.booksCount = booksCount;
 	}
 
-	public RatingsCount getRatings_count() {
-		return ratings_count;
+	public RatingsCount getRatingsCount() {
+		return ratingsCount;
 	}
 
-	public void setRatings_count(RatingsCount ratings_count) {
-		this.ratings_count = ratings_count;
+	public void setRatingsCount(RatingsCount ratingsCount) {
+		this.ratingsCount = ratingsCount;
 	}
 
-	public TextReviewsCount getText_reviews_count() {
-		return text_reviews_count;
+	public TextReviewsCount getTextReviewsCount() {
+		return textReviewsCount;
 	}
 
-	public void setText_reviews_count(TextReviewsCount text_reviews_count) {
-		this.text_reviews_count = text_reviews_count;
+	public void setTextReviewsCount(TextReviewsCount textReviewsCount) {
+		this.textReviewsCount = textReviewsCount;
 	}
 
-	public OriginalPublicationYear getOriginal_publication_year() {
-		return original_publication_year;
+	public OriginalPublicationYear getOriginalPublicationYear() {
+		return originalPublicationYear;
 	}
 
-	public void setOriginal_publication_year(OriginalPublicationYear original_publication_year) {
-		this.original_publication_year = original_publication_year;
+	public void setOriginalPublicationYear(OriginalPublicationYear originalPublicationYear) {
+		this.originalPublicationYear = originalPublicationYear;
 	}
 
-	public OriginalPublicationMonth getOriginal_publication_month() {
-		return original_publication_month;
+	public OriginalPublicationMonth getOriginalPublicationMonth() {
+		return originalPublicationMonth;
 	}
 
-	public void setOriginal_publication_month(OriginalPublicationMonth original_publication_month) {
-		this.original_publication_month = original_publication_month;
+	public void setOriginalPublicationMonth(OriginalPublicationMonth originalPublicationMonth) {
+		this.originalPublicationMonth = originalPublicationMonth;
 	}
 
-	public OriginalPublicationDay getOriginal_publication_day() {
-		return original_publication_day;
+	public OriginalPublicationDay getOriginalPublicationDay() {
+		return originalPublicationDay;
 	}
 
-	public void setOriginal_publication_day(OriginalPublicationDay original_publication_day) {
-		this.original_publication_day = original_publication_day;
+	public void setOriginalPublicationDay(OriginalPublicationDay originalPublicationDay) {
+		this.originalPublicationDay = originalPublicationDay;
 	}
 
-	public BigDecimal getAverage_rating() {
-		return average_rating;
+	public String getAverageRating() {
+		return averageRating;
 	}
 
-	public void setAverage_rating(BigDecimal average_rating) {
-		this.average_rating = average_rating;
+	public void setAverageRating(String averageRating) {
+		this.averageRating = averageRating;
 	}
 
-	public BestBook getBest_book() {
-		return best_book;
+	public BestBook getBestBook() {
+		return bestBook;
 	}
 
-	public void setBest_book(BestBook best_book) {
-		this.best_book = best_book;
+	public void setBestBook(BestBook bestBook) {
+		this.bestBook = bestBook;
 	}
 }

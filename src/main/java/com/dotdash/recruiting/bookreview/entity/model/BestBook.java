@@ -1,12 +1,21 @@
 package com.dotdash.recruiting.bookreview.entity.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
 public class BestBook {
+	@JacksonXmlProperty(isAttribute = true)
+	public String type;
 	public Id id;
 	public String title;
 	public Author author;
-	public String image_url;
-	public String small_image_url;
-	public String type;
+
+	@JsonProperty("image_url")
+	public String imageUrl;
+
+	@JsonProperty("small_image_url")
+	public String smallImageUrl;
+
 	public String text;
 
 	public BestBook() {
@@ -36,20 +45,20 @@ public class BestBook {
 		this.author = author;
 	}
 
-	public String getImage_url() {
-		return image_url;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setImage_url(String image_url) {
-		this.image_url = image_url;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
-	public String getSmall_image_url() {
-		return small_image_url;
+	public String getSmallImageUrl() {
+		return smallImageUrl;
 	}
 
-	public void setSmall_image_url(String small_image_url) {
-		this.small_image_url = small_image_url;
+	public void setSmallImageUrl(String smallImageUrl) {
+		this.smallImageUrl = smallImageUrl;
 	}
 
 	public String getType() {
