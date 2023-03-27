@@ -1,21 +1,17 @@
 package com.dotdash.recruiting.bookreview.entity.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class GoodreadsResponse {
-	@JsonProperty("Request")
-	public Request request;
-	public Search search;
+	private Search search;
 
 	public GoodreadsResponse() {
 	}
 
-	public Request getRequest() {
-		return request;
+	private GoodreadsResponse(Builder builder) {
+		setSearch(builder.search);
 	}
 
-	public void setRequest(Request request) {
-		this.request = request;
+	public static Builder newBuilder() {
+		return new Builder();
 	}
 
 	public Search getSearch() {
@@ -24,5 +20,36 @@ public class GoodreadsResponse {
 
 	public void setSearch(Search search) {
 		this.search = search;
+	}
+
+	/**
+	 * {@code GoodreadsResponse} builder static inner class.
+	 */
+	public static final class Builder {
+		private Search search;
+
+		private Builder() {
+		}
+
+
+		/**
+		 * Sets the {@code search} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param search the {@code search} to set
+		 * @return a reference to this Builder
+		 */
+		public Builder withSearch(Search search) {
+			this.search = search;
+			return this;
+		}
+
+		/**
+		 * Returns a {@code GoodreadsResponse} built from the parameters previously set.
+		 *
+		 * @return a {@code GoodreadsResponse} built with parameters of this {@code GoodreadsResponse.Builder}
+		 */
+		public GoodreadsResponse build() {
+			return new GoodreadsResponse(this);
+		}
 	}
 }

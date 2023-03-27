@@ -21,7 +21,7 @@ public class BooksController {
     private BooksHandler booksHandler;
 
     @GetMapping(value = ENDPOINT_SEARCH, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CollectionDto<BookDto>> SearchBooks(@RequestParam String query,
+    public ResponseEntity<CollectionDto<BookDto>> searchBooks(@RequestParam String query,
                                                               @RequestParam(required = false, defaultValue = DEFAULT_PAGE) Long page,
                                                               @RequestParam(required = false, defaultValue = DEFAULT_SEARCH_BY) String searchBy,
                                                               @RequestParam(required = false, defaultValue = DEFAULT_SORT_BY) String sortBy) {

@@ -3,97 +3,18 @@ package com.dotdash.recruiting.bookreview.entity.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Work {
-	public Id id;
-
-	@JsonProperty("books_count")
-	public BooksCount booksCount;
-
-	@JsonProperty("ratings_count")
-	public RatingsCount ratingsCount;
-
-	@JsonProperty("test_reviews_count")
-	public TextReviewsCount textReviewsCount;
-
-	@JsonProperty("original_publication_year")
-	public OriginalPublicationYear originalPublicationYear;
-
-	@JsonProperty("original_publication_month")
-	public OriginalPublicationMonth originalPublicationMonth;
-
-	@JsonProperty("original_publication_day")
-	public OriginalPublicationDay originalPublicationDay;
-
-	@JsonProperty("average_rating")
-	public String averageRating;
-
 	@JsonProperty("best_book")
 	public BestBook bestBook;
 
 	public Work() {
 	}
 
-	public Id getId() {
-		return id;
+	private Work(Builder builder) {
+		setBestBook(builder.bestBook);
 	}
 
-	public void setId(Id id) {
-		this.id = id;
-	}
-
-	public BooksCount getBooksCount() {
-		return booksCount;
-	}
-
-	public void setBooksCount(BooksCount booksCount) {
-		this.booksCount = booksCount;
-	}
-
-	public RatingsCount getRatingsCount() {
-		return ratingsCount;
-	}
-
-	public void setRatingsCount(RatingsCount ratingsCount) {
-		this.ratingsCount = ratingsCount;
-	}
-
-	public TextReviewsCount getTextReviewsCount() {
-		return textReviewsCount;
-	}
-
-	public void setTextReviewsCount(TextReviewsCount textReviewsCount) {
-		this.textReviewsCount = textReviewsCount;
-	}
-
-	public OriginalPublicationYear getOriginalPublicationYear() {
-		return originalPublicationYear;
-	}
-
-	public void setOriginalPublicationYear(OriginalPublicationYear originalPublicationYear) {
-		this.originalPublicationYear = originalPublicationYear;
-	}
-
-	public OriginalPublicationMonth getOriginalPublicationMonth() {
-		return originalPublicationMonth;
-	}
-
-	public void setOriginalPublicationMonth(OriginalPublicationMonth originalPublicationMonth) {
-		this.originalPublicationMonth = originalPublicationMonth;
-	}
-
-	public OriginalPublicationDay getOriginalPublicationDay() {
-		return originalPublicationDay;
-	}
-
-	public void setOriginalPublicationDay(OriginalPublicationDay originalPublicationDay) {
-		this.originalPublicationDay = originalPublicationDay;
-	}
-
-	public String getAverageRating() {
-		return averageRating;
-	}
-
-	public void setAverageRating(String averageRating) {
-		this.averageRating = averageRating;
+	public static Builder newBuilder() {
+		return new Builder();
 	}
 
 	public BestBook getBestBook() {
@@ -102,5 +23,35 @@ public class Work {
 
 	public void setBestBook(BestBook bestBook) {
 		this.bestBook = bestBook;
+	}
+
+	/**
+	 * {@code Work} builder static inner class.
+	 */
+	public static final class Builder {
+		private BestBook bestBook;
+
+		private Builder() {
+		}
+
+		/**
+		 * Sets the {@code bestBook} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param bestBook the {@code bestBook} to set
+		 * @return a reference to this Builder
+		 */
+		public Builder withBestBook(BestBook bestBook) {
+			this.bestBook = bestBook;
+			return this;
+		}
+
+		/**
+		 * Returns a {@code Work} built from the parameters previously set.
+		 *
+		 * @return a {@code Work} built with parameters of this {@code Work.Builder}
+		 */
+		public Work build() {
+			return new Work(this);
+		}
 	}
 }

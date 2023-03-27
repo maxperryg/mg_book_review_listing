@@ -2,52 +2,22 @@ package com.dotdash.recruiting.bookreview.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.math.BigDecimal;
-
 public class Search {
-	public String query;
-
-	@JsonProperty("results-start")
-	public Long resultsStart;
-
-	@JsonProperty("results-end")
-	public Long resultsEnd;
-
 	@JsonProperty("total-results")
 	public Long totalResults;
-
-	public String source;
-
-	@JsonProperty("query-time-seconds")
-	public BigDecimal queryTimeSeconds;
 
 	public Results results;
 
 	public Search() {
 	}
 
-	public String getQuery() {
-		return query;
+	private Search(Builder builder) {
+		setTotalResults(builder.totalResults);
+		setResults(builder.results);
 	}
 
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public Long getResultsStart() {
-		return resultsStart;
-	}
-
-	public void setResultsStart(Long resultsStart) {
-		this.resultsStart = resultsStart;
-	}
-
-	public Long getResultsEnd() {
-		return resultsEnd;
-	}
-
-	public void setResultsEnd(Long resultsEnd) {
-		this.resultsEnd = resultsEnd;
+	public static Builder newBuilder() {
+		return new Builder();
 	}
 
 	public Long getTotalResults() {
@@ -58,27 +28,53 @@ public class Search {
 		this.totalResults = totalResults;
 	}
 
-	public String getSource() {
-		return source;
-	}
-
-	public void setSource(String source) {
-		this.source = source;
-	}
-
-	public BigDecimal getQueryTimeSeconds() {
-		return queryTimeSeconds;
-	}
-
-	public void setQueryTimeSeconds(BigDecimal queryTimeSeconds) {
-		this.queryTimeSeconds = queryTimeSeconds;
-	}
-
 	public Results getResults() {
 		return results;
 	}
 
 	public void setResults(Results results) {
 		this.results = results;
+	}
+
+	/**
+	 * {@code Search} builder static inner class.
+	 */
+	public static final class Builder {
+		private Long totalResults;
+		private Results results;
+
+		private Builder() {
+		}
+
+		/**
+		 * Sets the {@code totalResults} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param totalResults the {@code totalResults} to set
+		 * @return a reference to this Builder
+		 */
+		public Builder withTotalResults(Long totalResults) {
+			this.totalResults = totalResults;
+			return this;
+		}
+
+		/**
+		 * Sets the {@code results} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param results the {@code results} to set
+		 * @return a reference to this Builder
+		 */
+		public Builder withResults(Results results) {
+			this.results = results;
+			return this;
+		}
+
+		/**
+		 * Returns a {@code Search} built from the parameters previously set.
+		 *
+		 * @return a {@code Search} built with parameters of this {@code Search.Builder}
+		 */
+		public Search build() {
+			return new Search(this);
+		}
 	}
 }

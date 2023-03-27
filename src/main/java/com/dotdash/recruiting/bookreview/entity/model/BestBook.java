@@ -1,12 +1,8 @@
 package com.dotdash.recruiting.bookreview.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 public class BestBook {
-	@JacksonXmlProperty(isAttribute = true)
-	public String type;
-	public Id id;
 	public String title;
 	public Author author;
 
@@ -16,17 +12,18 @@ public class BestBook {
 	@JsonProperty("small_image_url")
 	public String smallImageUrl;
 
-	public String text;
-
 	public BestBook() {
 	}
 
-	public Id getId() {
-		return id;
+	private BestBook(Builder builder) {
+		setTitle(builder.title);
+		setAuthor(builder.author);
+		setImageUrl(builder.imageUrl);
+		setSmallImageUrl(builder.smallImageUrl);
 	}
 
-	public void setId(Id id) {
-		this.id = id;
+	public static Builder newBuilder() {
+		return new Builder();
 	}
 
 	public String getTitle() {
@@ -61,19 +58,69 @@ public class BestBook {
 		this.smallImageUrl = smallImageUrl;
 	}
 
-	public String getType() {
-		return type;
-	}
+	/**
+	 * {@code BestBook} builder static inner class.
+	 */
+	public static final class Builder {
+		private String title;
+		private Author author;
+		private String imageUrl;
+		private String smallImageUrl;
 
-	public void setType(String type) {
-		this.type = type;
-	}
+		private Builder() {
+		}
 
-	public String getText() {
-		return text;
-	}
+		/**
+		 * Sets the {@code title} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param title the {@code title} to set
+		 * @return a reference to this Builder
+		 */
+		public Builder withTitle(String title) {
+			this.title = title;
+			return this;
+		}
 
-	public void setText(String text) {
-		this.text = text;
+		/**
+		 * Sets the {@code author} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param author the {@code author} to set
+		 * @return a reference to this Builder
+		 */
+		public Builder withAuthor(Author author) {
+			this.author = author;
+			return this;
+		}
+
+		/**
+		 * Sets the {@code imageUrl} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param imageUrl the {@code imageUrl} to set
+		 * @return a reference to this Builder
+		 */
+		public Builder withImageUrl(String imageUrl) {
+			this.imageUrl = imageUrl;
+			return this;
+		}
+
+		/**
+		 * Sets the {@code smallImageUrl} and returns a reference to this Builder enabling method chaining.
+		 *
+		 * @param smallImageUrl the {@code smallImageUrl} to set
+		 * @return a reference to this Builder
+		 */
+		public Builder withSmallImageUrl(String smallImageUrl) {
+			this.smallImageUrl = smallImageUrl;
+			return this;
+		}
+
+		/**
+		 * Returns a {@code BestBook} built from the parameters previously set.
+		 *
+		 * @return a {@code BestBook} built with parameters of this {@code BestBook.Builder}
+		 */
+		public BestBook build() {
+			return new BestBook(this);
+		}
 	}
 }

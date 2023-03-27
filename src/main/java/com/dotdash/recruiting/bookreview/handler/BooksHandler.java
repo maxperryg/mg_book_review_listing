@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -36,30 +35,20 @@ public class BooksHandler {
         var booksResponse = goodReadsApiDao.searchBooks(query, page, validatedSearchByField);
 
         var search = booksResponse.getSearch();
-        var resultsStart = search.getResultsStart();
-        var resultsEnd = search.getResultsEnd();
         var totalResults = search.getTotalResults();
 
         var worksList = search.results.getWork();
         if (worksList == null) {
-            return CollectionDto.<BookDto>newBuilder()
-                    .withItems(List.of())
-                    .build();
+            worksList = List.of();
         }
 
-        var numberOfResults = worksList.size();
-        var bookDtoList = new ArrayList<BookDto>();
-        for (int i = 0; i < numberOfResults; i++) {
-            var book = worksList.get(i);
-            var bookDto = BookDto.newBuilder()
-                    .withTitle(book.getBestBook().getTitle())
-                    .withAuthor(book.bestBook.author.getName())
-                    .withImage(book.bestBook.imageUrl)
-                    .build();
-            bookDtoList.add(bookDto);
-        }
-        var sortedBookDtoList =  bookDtoList.stream()
-                .sorted(Comparator.comparing(validatedSortByField))
+        var sortedBookDtoList = worksList.stream()
+                .map(book -> BookDto.newBuilder()
+                        .withTitle(book.getBestBook().getTitle())
+                        .withAuthor(book.bestBook.author.getName())
+                        .withImage(book.bestBook.imageUrl)
+                        .build())
+                .sorted((Comparator.comparing(validatedSortByField)))
                 .toList();
 
         return CollectionDto.<BookDto>newBuilder()
