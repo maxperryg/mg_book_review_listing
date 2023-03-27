@@ -1,41 +1,41 @@
 package com.dotdash.recruiting.bookreview.entity.dto;
 
 public class BookDto {
-    private Long id;
+    private String name;
 
     private BookDto(Builder builder) {
-        setId(builder.id);
+        setName(builder.name);
     }
 
     public static Builder newBuilder() {
         return new Builder();
     }
 
-    public Long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
      * {@code BookDto} builder static inner class.
      */
     public static final class Builder {
-        private Long id;
+        private String name;
 
         private Builder() {
         }
 
         /**
-         * Sets the {@code id} and returns a reference to this Builder enabling method chaining.
+         * Sets the {@code name} and returns a reference to this Builder enabling method chaining.
          *
-         * @param id the {@code id} to set
+         * @param name the {@code name} to set
          * @return a reference to this Builder
          */
-        public Builder withId(Long id) {
-            this.id = id;
+        public Builder withName(String name) {
+            this.name = name;
             return this;
         }
 

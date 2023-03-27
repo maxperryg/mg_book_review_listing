@@ -3,8 +3,11 @@ spring:
     import: file:.env[.properties]
 
 application:
-  credentials:
       api:
         goodreads:
-          key: ${GOODREADS_API_KEY}
-          secret: ${GOODREADS_API_SECRET}
+          url: ${GOODREADS_API_URL}
+          endpoint:
+            search: ${GOODREADS_API_ENDPOINT_SEARCH}
+          credentials:
+            key: ${GOODREADS_API_KEY}
+            secret: ${GOODREADS_API_SECRET}
