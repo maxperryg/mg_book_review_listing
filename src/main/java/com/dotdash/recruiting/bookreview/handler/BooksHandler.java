@@ -2,12 +2,14 @@ package com.dotdash.recruiting.bookreview.handler;
 
 import com.dotdash.recruiting.bookreview.dao.api.IGoodReadsApiDao;
 import com.dotdash.recruiting.bookreview.entity.dto.BookDto;
+import com.dotdash.recruiting.bookreview.entity.dto.CollectionDto;
 import com.dotdash.recruiting.bookreview.entity.exception.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -28,24 +30,45 @@ public class BooksHandler {
 
     private IGoodReadsApiDao goodReadsApiDao;
 
-    public List<BookDto> searchBooks(String query, Long page, String searchBy, String sortBy) {
+    public CollectionDto<BookDto> searchBooks(String query, Long page, String searchBy, String sortBy) {
         var validatedSearchByField = getValidatedSearchByField(searchBy);
         var validatedSortByField = getValidatedSortByField(sortBy);
         var booksResponse = goodReadsApiDao.searchBooks(query, page, validatedSearchByField);
 
-        var worksList = booksResponse.getSearch().results.getWork();
+        var search = booksResponse.getSearch();
+        var resultsStart = search.getResultsStart();
+        var resultsEnd = search.getResultsEnd();
+        var totalResults = search.getTotalResults();
+
+        var worksList = search.results.getWork();
         if (worksList == null) {
-            return List.of();
+            return CollectionDto.<BookDto>newBuilder()
+                    .withItems(List.of())
+                    .build();
         }
 
-        return booksResponse.getSearch().results.getWork().stream()
-                .map(book -> BookDto.newBuilder()
-                        .withTitle(book.getBestBook().getTitle())
-                        .withAuthor(book.bestBook.author.getName())
-                        .withImage(book.bestBook.imageUrl)
-                        .build())
+        var numberOfResults = worksList.size();
+        var bookDtoList = new ArrayList<BookDto>();
+        for (int i = 0; i < numberOfResults; i++) {
+            var book = worksList.get(i);
+            var bookDto = BookDto.newBuilder()
+                    .withTitle(book.getBestBook().getTitle())
+                    .withAuthor(book.bestBook.author.getName())
+                    .withImage(book.bestBook.imageUrl)
+                    .build();
+            bookDtoList.add(bookDto);
+        }
+        var sortedBookDtoList =  bookDtoList.stream()
                 .sorted(Comparator.comparing(validatedSortByField))
                 .toList();
+
+        return CollectionDto.<BookDto>newBuilder()
+                .withPage(page)
+                .withRpp(sortedBookDtoList.size())
+                .withTotalItems(totalResults)
+                .withTotalPages((int) Math.ceil((double) totalResults / sortedBookDtoList.size()))
+                .withItems(sortedBookDtoList)
+                .build();
     }
 
     private String getValidatedSearchByField(String searchBy) {
