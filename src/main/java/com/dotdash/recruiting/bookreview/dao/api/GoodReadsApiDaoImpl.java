@@ -19,31 +19,40 @@ import java.util.List;
 
 @Component
 public class GoodReadsApiDaoImpl implements IGoodReadsApiDao {
-    // Logging
+    // Logging Related
     private static final String MESSAGE_CALLING_PREFIX = "Making HTTP request to {}";
 
+    // GoodReads API Related
+    private static final String GOOD_READS_API_SCHEME = "https";
+    private static final String GOOD_READS_API_URL_PARAM_KEY = "key";
+    private static final String GOOD_READS_API_URL_PARAM_QUERY = "q";
+    private static final String GOOD_READS_API_URL_PARAM_PAGE = "page";
+    private static final String GOOD_READS_API_URL_PARAM_SEARCH_BY = "search[field]";
+
     @Value("${application.api.goodreads.url}")
-    private String url;
+    private String GOOD_READS_API_URL_HOST;
 
     @Value("${application.api.goodreads.endpoint.search}")
-    private String searchEndpoint;
+    private String GOOD_READS_API_URL_PATH;
 
     @Value("${application.api.goodreads.credentials.key}")
-    private String key;
+    private String GOOD_READS_API_KEY;
 
     @Value("${application.api.goodreads.credentials.secret}")
-    private String secret;
+    private String GOOD_READS_API_SECRET;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public GoodreadsResponse searchBooks() {
+    public GoodreadsResponse searchBooks(String query, Long page, String searchBy) {
         var uri = UriComponentsBuilder.newInstance()
-                .scheme("https")
-                .host(url)
-                .path(searchEndpoint)
-                .queryParam("key", key)
-                .queryParam("q", "moby")
+                .scheme(GOOD_READS_API_SCHEME)
+                .host(GOOD_READS_API_URL_HOST)
+                .path(GOOD_READS_API_URL_PATH)
+                .queryParam(GOOD_READS_API_URL_PARAM_KEY, GOOD_READS_API_KEY)
+                .queryParam(GOOD_READS_API_URL_PARAM_QUERY, query)
+                .queryParam(GOOD_READS_API_URL_PARAM_PAGE, page)
+                .queryParam(GOOD_READS_API_URL_PARAM_SEARCH_BY, searchBy)
                 .build()
                 .toUriString();
         logger.info(MESSAGE_CALLING_PREFIX, uri);
