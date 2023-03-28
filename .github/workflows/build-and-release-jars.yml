@@ -1,60 +1,56 @@
-name: Build and Release Jars
+name: Build and Release
 
 on:
-  push:
+  merge:
     branches:
-      - 'release-*'
+      - 'main'
 
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up JDK
-      uses: actions/setup-java@v2
-      with:
-        java-version: '17'
+      - name: Set up Java 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      - name: Build JAR files
+        run: mvn clean package
 
-    - name: Build clientApp JAR
-      run: mvn -B package --file pom.xml -Dapp.class=com.dotdash.recruiting.bookreview.clientApp
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this release:
+            - Added new features
+            - Fixed bugs
+          draft: false
+          prerelease: false
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-        body: |
-          Changes in this Release
-          - Bug fix: ...
-          - New feature: ...
-        draft: false
-        prerelease: false
+      - name: Upload JAR file
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/my-app.jar
+          asset_name: my-app.jar
+          asset_content_type: application/java-archive
 
-    - name: Upload app JAR
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: target/*.jar
-        asset_name: app.jar
-        asset_content_type: application/java-archive
-
-    - name: Upload clientApp JAR
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: target/clientApp-*.jar
-        asset_name: clientApp.jar
-        asset_content_type: application/java-archive
+      - name: Upload Second JAR file
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: target/clientApp.jar
+          asset_name: clientApp.jar
+          asset_content_type: application/java-archive
