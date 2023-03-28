@@ -1,4 +1,5 @@
 name: Build and Release on main
+permissions: write-all
 
 on:
   pull_request:
