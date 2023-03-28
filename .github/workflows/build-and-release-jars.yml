@@ -1,9 +1,11 @@
 name: Build and Release
 
 on:
-  merge:
+  pull_request:
+    types:
+      - closed
     branches:
-      - 'main'
+      - main
 
 jobs:
   build-and-release:
@@ -17,7 +19,7 @@ jobs:
         with:
           java-version: 17
 
-      - name: Build JAR files
+      - name: Build JAR file
         run: mvn clean package
 
       - name: Create Release
@@ -26,8 +28,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.event.pull_request.head.ref }}
+          release_name: Release ${{ github.event.pull_request.head.ref }}
           body: |
             Changes in this release:
             - Added new features
@@ -43,14 +45,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: target/my-app.jar
           asset_name: my-app.jar
-          asset_content_type: application/java-archive
-
-      - name: Upload Second JAR file
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/clientApp.jar
-          asset_name: clientApp.jar
           asset_content_type: application/java-archive
