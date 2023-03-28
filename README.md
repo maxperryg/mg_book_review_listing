@@ -1,5 +1,7 @@
 # Book Listing Exercise #
 
+#test
+
 The purpose of this exercise is to test your familiarity with Java/Kotlin full-stack development.  You'll be building a small book listing app using frameworks of your choice and the Goodreads' public API.
 
 ## Functional Requirements ##
