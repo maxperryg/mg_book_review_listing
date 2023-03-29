@@ -1,6 +1,6 @@
 spring:
   config:
-    import: file:src/.env[.properties]
+    import: file:.env[.properties]
 
 application:
       api:
