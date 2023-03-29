@@ -31,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.event.pull_request.head.ref }}
-          release_name: Release ${{ github.event.pull_request.head.ref }}
+          release_name: ${{ github.event.pull_request.head.ref }}
           body: |
             Changes in this release:
             - Added new features
@@ -45,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/my-app.jar
-          asset_name: my-app.jar
+          asset_path: target/book-review-listing-1.0-SNAPSHOT.jar
+          asset_name: book-review-listing-1.0-SNAPSHOT.jar
           asset_content_type: application/java-archive
