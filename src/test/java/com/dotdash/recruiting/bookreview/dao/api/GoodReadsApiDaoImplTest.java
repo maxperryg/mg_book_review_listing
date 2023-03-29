@@ -40,10 +40,10 @@ public class GoodReadsApiDaoImplTest {
                 .scheme("https")
                 .host("goodreads.com")
                 .path("search")
-                .queryParam("key", "123456")
                 .queryParam("q", query)
                 .queryParam("page", page)
                 .queryParam("search[field]", searchBy)
+                .queryParam("key", "123456")
                 .build()
                 .toUriString();
         var mockedHeaders = new HttpHeaders();
