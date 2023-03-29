@@ -58,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/book-review-listing-client-1.0-SNAPSHOT.jar
+          asset_path: clientApp/target/book-review-listing-client-1.0-SNAPSHOT.jar
           asset_name: book-review-listing-client-1.0-SNAPSHOT.jar
           asset_content_type: application/java-archive
 
