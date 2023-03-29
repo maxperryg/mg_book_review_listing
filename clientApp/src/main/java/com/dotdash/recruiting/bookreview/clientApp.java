@@ -34,6 +34,7 @@ public class clientApp {
     private static final String COMMAND_LINE_HELP_MESSAGE = "java -jar {jar_name}}.jar [OPTIONS]";
     private static final String COMMAND_LINE_HOSTNAME_MESSAGE = "Hostname: %s";
     private static final String COMMAND_LINE_ERROR_MESSAGE = "Something went wrong: %s";
+    private static final String COMMAND_LINE_MISSING_OPTION_ERROR_MESSAGE = "Option '%s' is missing";
 
     private static final String APP_URL = "http://localhost:8080/book/search?query=%s&page=%s&searchBy=%s&sortBy=%s";
 
@@ -56,6 +57,9 @@ public class clientApp {
     private static void searchBasedOnOptionValues(CommandLine values) {
         // Get option values and default for certain optional values if they're not specified
         var searchQuery = values.getOptionValue(COMMAND_LINE_OPTION_SHORT_SEARCH);
+        if (searchQuery == null || searchQuery.isEmpty()) {
+            throw new RuntimeException(String.format(COMMAND_LINE_MISSING_OPTION_ERROR_MESSAGE, COMMAND_LINE_OPTION_LONG_SEARCH));
+        }
         var sortOrder = values.getOptionValue(COMMAND_LINE_OPTION_LONG_SORT, COMMAND_LINE_OPTION_DEFAULT_SORT);
         var pageNumber = values.getOptionValue(COMMAND_LINE_OPTION_SHORT_PAGE, COMMAND_LINE_OPTION_DEFAULT_PAGE);
 
@@ -130,7 +134,6 @@ public class clientApp {
         var options = new Options();
 
         var searchOption = new Option(COMMAND_LINE_OPTION_SHORT_SEARCH, COMMAND_LINE_OPTION_LONG_SEARCH, true, COMMAND_LINE_OPTION_DESCRIPTION_SEARCH);
-        searchOption.setRequired(true);
         options.addOption(searchOption);
 
         var sortOption = new Option(null, COMMAND_LINE_OPTION_LONG_SORT, true, COMMAND_LINE_OPTION_DESCRIPTION_SORT);
