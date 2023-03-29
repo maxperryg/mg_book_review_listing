@@ -25,7 +25,7 @@ jobs:
         run: mvn clean package
         
       - name: Build clientApp JAR
-        run: mvn -B package --file pom.xml -Dapp.class=com.dotdash.recruiting.bookreview.clientApp
+        run: mvn -f clientApp/pom.xml package
 
       - name: Create Release
         id: create_release
@@ -58,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/clientApp-*.jar
-          asset_name: clientApp.jar
+          asset_path: target/book-review-listing-client-1.0-SNAPSHOT.jar
+          asset_name: book-review-listing-client-1.0-SNAPSHOT.jar
           asset_content_type: application/java-archive
 
