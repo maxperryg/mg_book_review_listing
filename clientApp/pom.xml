@@ -8,7 +8,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dotdash.recruiting</groupId>
-    <artifactId>book-review-listing</artifactId>
+    <artifactId>book-review-listing-client</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>book-review-listing-client</name>
