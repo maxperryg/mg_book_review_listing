@@ -1,44 +1,47 @@
-# Book Listing Exercise #
+# Book Listing Client and Server #
 
-#test3
+## Summary ##
 
-The purpose of this exercise is to test your familiarity with Java/Kotlin full-stack development.  You'll be building a small book listing app using frameworks of your choice and the Goodreads' public API.
+* Java based Command line interface app to search for and print books by title or author
+* Java/Spring based RESTful API Server that the command line client will communicate with to search for books
+* Java version - 17
+* Developer - Max Grossman
+* Not containerized
+* Port - 8080
 
-## Functional Requirements ##
-* The client app will accept the following command line arguments:
-    - --help Output a usage message and exit
-    - -s, --search _TERMS_ Search the Goodreads' API and display the results on screen.
-        + Results must include author, title, and a link or display of the image of the book
-    - --sort _FIELD_ where field is one of "author" or "title"
-        + Sorts the results by the specified field, if no sort is specified, title is the default
-    - -p _NUMBER_ if you choose to implement pagination, display the _NUMBER_ page of results
-    - -h, --host _HOSTNAME_ the hostname or ip address where the server can be found, should default to 127.0.0.1
+##  Architecture ##
+* Proper diagram to come
 
-* There should be a server component as well. The server component should provide REST endpoints that the client
-  communicates with. The client should not directly contact the Goodreads API.
-* The server should listen on a non-restricted port and the client should connect to that port.
+User -> Client -> Server -> GoodreadsAPI
 
-## System Requirements ##
+## Download and run ##
+* Executable .jar files will be available in Github releases
+* Download `book-review-listing-x.x-SNAPSHOT.jar` and `book-review-listing-client-x.x-SNAPSHOT.jar`
+* Set up your environment variables (see EnvVars in this doc)
+  * .env file will be provided with necessary values
+  * Normally this would not happen, but for this demo it will be provided
+* Start the server by running `java -jar book-review-listing-x.x-SNAPSHOT.jar`
+* On the same machine execute whatever searches you want with the client
+  * See how to run Client in this doc
 
-* The application must be written in Java or Kotlin
-* You may use any Java/Kotlin frameworks / libraries that you see fit
-* Errors that occur during processing should be logged and the user should be presented with a message asking them to retry.
 
-## Non-Requirements ##
+## How to run the client ##
+* Client jar can be executed by running `java -jar book-review-listing-client-x.x-SNAPSHOT.jar [OPTIONS]`
 
-* Security measures, including user authentication / authorization
-* Unit testing
-* UX, as long as the application is usable.  As this is just an exercise the UX can be command-line only or use a console or
-  GUI framework of your choice
-* Logging, with the exception of errors
-
-## Misc Notes ##
-
-* https://www.goodreads.com/api/index#search.books (Key: RDfV4oPehM6jNhxfNQzzQ, Secret: fu8fQ5oGQEDlwiICw45dGSuxiu13STyIrxY0Rb6ibI).
-* The Goodreads search API returns XML. Transform the XML into JSON and only send what your app will need
-* Be sure to document your code, _especially cases where you might have made a different choice in a 'real' application_
-* Upon completion, be sure that your code is accessible through a git repo, and provide the link to that repo to Dotdash
-
-## Bonus Points ##
-
-* Include pagination in the UI.
+* *OPTIONS*
+* -s --search [TERMS]:
+  * search term(s) - just a string search query
+    * REQUIRED
+    * This is not really validated at all on the client or server side
+    * Normally this should be validated
+* -p [NUMBER]:
+  * page number - the page number to return
+    * OPTIONAL - default 1
+    * depends on how many pages there are
+* --sort [FIELD]
+  * field to sort by
+    * OPTIONAL - default title
+* -h --host
+  * print the hostname of the server
+* --help
+  * print help message
